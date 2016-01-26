@@ -10,6 +10,7 @@ backend default {
     .port = "${VARNISH_BACKEND_PORT}";
 }
 #
+#
 # Below is a commented-out copy of the default VCL logic.  If you
 # redefine any of these subroutines, the built-in logic will be
 # appended to your code.
