@@ -5,12 +5,11 @@ vcl 4.0;
 # Default backend definition.  Set this to point to your content
 # server.
 #
+#
 backend default {
-    .host = "${VARNISH_BACKEND_IP}";
-    .port = "${VARNISH_BACKEND_PORT}";
+    .host = "${VARNISH_BACKEND_IP}:${VARNISH_BACKEND_PORT}";
 }
-#
-#
+
 # Below is a commented-out copy of the default VCL logic.  If you
 # redefine any of these subroutines, the built-in logic will be
 # appended to your code.
@@ -89,9 +88,14 @@ backend default {
 #     return (deliver);
 # }
 #
-# sub vcl_deliver {
-#     return (deliver);
-# }
+sub vcl_deliver {
+    if (obj.hits > 0) {
+        set resp.http.X-Cache = "HIT";
+    } else {
+        set resp.http.X-Cache = "MISS";
+    }
+    return (deliver);
+}
 #
 # sub vcl_error {
 #     set obj.http.Content-Type = "text/html; charset=utf-8";
