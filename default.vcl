@@ -9,7 +9,6 @@ vcl 4.0;
 backend default {
     .host = "${VARNISH_BACKEND_IP}:${VARNISH_BACKEND_PORT}";
 }
-
 # Below is a commented-out copy of the default VCL logic.  If you
 # redefine any of these subroutines, the built-in logic will be
 # appended to your code.
@@ -91,6 +90,7 @@ backend default {
 sub vcl_deliver {
     if (obj.hits > 0) {
         set resp.http.X-Cache = "HIT";
+        set resp.http.X-Count = obj.hits;
     } else {
         set resp.http.X-Cache = "MISS";
     }
