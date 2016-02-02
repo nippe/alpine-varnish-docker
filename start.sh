@@ -38,16 +38,15 @@ do
     sed -i "s|\${${name}}|${value}|g" /etc/varnish/default.vcl
 done
 
-# echo "varnishd -a 0.0.0.0:${VARNISH_PORT} -b ${VARNISH_BACKEND_IP}:${VARNISH_BACKEND_PORT}"
-# varnishd -a 0.0.0.0:${VARNISH_PORT} -b ${VARNISH_BACKEND_IP}:${VARNISH_BACKEND_PORT}
+sleep $VARNISH_D_DELAY
 varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:${VARNISH_PORT} &
 pid="$!"
 
-# echo "Napping..."
-sleep 10
-echo "Starting log to console"
-varnishlog &
-pid2="$!"
+if [ $VARNISH_LOG -eq 1 ]; then
+  echo "Starting log to console"
+  varnishlog &
+  pid2="$!"
+fi
 
 # wait indefinetely
 while true
