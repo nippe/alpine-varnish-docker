@@ -38,7 +38,7 @@ do
     sed -i "s|\${${name}}|${value}|g" /etc/varnish/default.vcl
 done
 
-sleep $VARNISH_D_DELAY
+sleep ${VARNISH_D_DELAY:=10}
 varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:${VARNISH_PORT} &
 pid="$!"
 
