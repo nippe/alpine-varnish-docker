@@ -44,6 +44,7 @@ sleep ${VARNISH_D_DELAY:=10}
 echo "starting varnishd"
 varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:${VARNISH_PORT} &
 pid="$!"
+sleep 5
 
 if [ ${VARNISH_LOG:=0} -eq 1 ]; then
   echo "Starting log to console"
