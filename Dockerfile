@@ -3,6 +3,7 @@ FROM ctjinx/alpine-varnish
 RUN apk update
 RUN apk add gcc
 RUN apk add libc-dev
+RUN apk curl
 
 # Make our custom VCLs available on the container
 ADD default.vcl /etc/varnish/default.vcl

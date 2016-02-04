@@ -6,11 +6,6 @@ set -x
 pid=0
 pid2=0
 
-# SIGUSR1-handler
-my_handler() {
-  echo "my_handler"
-}
-
 # SIGTERM-handler
 term_handler() {
   if [ $pid -ne 0 ]; then
@@ -40,13 +35,14 @@ done
 
 # echo "varnishd -a 0.0.0.0:${VARNISH_PORT} -b ${VARNISH_BACKEND_IP}:${VARNISH_BACKEND_PORT}"
 # varnishd -a 0.0.0.0:${VARNISH_PORT} -b ${VARNISH_BACKEND_IP}:${VARNISH_BACKEND_PORT}
-sleep ${VARNISH_D_DELAY:=10}
+sleep ${VARNISH_D_DELAY:=12}
+curl $VARNISH_BACKEND_IP:$VARNISH_BACKEND_PORT
 echo "starting varnishd"
-varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:${VARNISH_PORT} &
+varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:${VARNISH_PORT} -F &
 pid="$!"
 sleep 5
 
-if [ ${VARNISH_LOG:=1} -eq 1 ]; then
+if [ ${VARNISH_LOG:=0} -eq 1 ]; then
   echo "Starting log to console"
   varnishlog &
   pid2="$!"
