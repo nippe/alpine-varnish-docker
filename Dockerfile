@@ -1,6 +1,6 @@
 FROM alpine:3.3
 
-ENV VERSION=#{VARNISH_VERSION}
+ENV VERSION="4.1.0"
 
 RUN apk add --update curl make gcc g++ python linux-headers py-docutils ncurses ncurses-dev pcre pcre-dev libedit libedit-dev && \
   curl -sSL https://repo.varnish-cache.org/source/varnish-${VERSION}.tar.gz | tar -xz && \
