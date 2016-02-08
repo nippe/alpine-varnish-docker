@@ -35,10 +35,10 @@ done
 
 # echo "varnishd -a 0.0.0.0:${VARNISH_PORT} -b ${VARNISH_BACKEND_IP}:${VARNISH_BACKEND_PORT}"
 # varnishd -a 0.0.0.0:${VARNISH_PORT} -b ${VARNISH_BACKEND_IP}:${VARNISH_BACKEND_PORT}
-sleep ${VARNISH_D_DELAY:=5}
+sleep ${VARNISH_D_DELAY:=10}
 curl $VARNISH_BACKEND_IP:$VARNISH_BACKEND_PORT
 echo "starting varnishd"
-varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:${VARNISH_PORT} -F -p cli_timeout=15 -p connect_timeout=10 &
+varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:${VARNISH_PORT} -F -p cli_timeout=60 -p connect_timeout=60 &
 pid="$!"
 sleep 5
 
