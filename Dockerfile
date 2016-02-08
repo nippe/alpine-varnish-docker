@@ -1,5 +1,4 @@
-FROM janeczku/alpine-kubernetes
-# FROM alpine:3.3
+FROM alpine:3.3
 
 ENV VERSION="4.1.0"
 
