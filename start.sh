@@ -37,8 +37,24 @@ done
 # varnishd -a 0.0.0.0:${VARNISH_PORT} -b ${VARNISH_BACKEND_IP}:${VARNISH_BACKEND_PORT}
 sleep ${VARNISH_D_DELAY:=10}
 curl $VARNISH_BACKEND_IP:$VARNISH_BACKEND_PORT
+
+// Ensure VARNISH_ADMIN_IP is defined.
+if [ -z "$VARNISH_ADMIN_IP"  ]; then
+  VARNISH_ADMIN_IP="localhost";
+fi
+
+// Ensure VARNISH_ADMIN_PORT is defined.
+if [ -z "$VARNISH_ADMIN_PORT" ]; then
+  VARNISH_ADMIN_PORT="6082";
+fi
+
+
 echo "starting varnishd"
-varnishd -f /etc/varnish/default.vcl -s malloc,100M -a 0.0.0.0:${VARNISH_PORT} -F -p cli_timeout=60 -p connect_timeout=60 &
+varnishd -f /etc/varnish/default.vcl \
+         -s malloc,100M \
+         -a 0.0.0.0:${VARNISH_PORT} \
+         -T $VARNISH_ADMIN_IP:$VARNISH_ADMIN_PORT \
+         -F -p cli_timeout=60 -p connect_timeout=60 &
 pid="$!"
 sleep 5
 
