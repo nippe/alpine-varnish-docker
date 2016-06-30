@@ -38,12 +38,12 @@ done
 sleep ${VARNISH_D_DELAY:=10}
 curl $VARNISH_BACKEND_IP:$VARNISH_BACKEND_PORT
 
-// Ensure VARNISH_ADMIN_IP is defined.
+# Ensure VARNISH_ADMIN_IP is defined.
 if [ -z "$VARNISH_ADMIN_IP"  ]; then
   VARNISH_ADMIN_IP="localhost";
 fi
 
-// Ensure VARNISH_ADMIN_PORT is defined.
+# Ensure VARNISH_ADMIN_PORT is defined.
 if [ -z "$VARNISH_ADMIN_PORT" ]; then
   VARNISH_ADMIN_PORT="6082";
 fi
