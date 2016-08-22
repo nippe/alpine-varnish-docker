@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:latest
 
 ENV VERSION="4.1.0"
 
